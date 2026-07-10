@@ -1,0 +1,8 @@
+.DS_Store
+*.HEIC
+*.heic
+*.MOV
+*.mov
+*.JPEG
+iCloud Photos*/
+.claude/

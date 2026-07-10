@@ -1,0 +1,181 @@
+:root {
+  --bg: #faf7f1;
+  --card: #ffffff;
+  --ink: #33402f;
+  --ink-soft: #6b7565;
+  --accent: #4a7c59;
+  --accent-dark: #356042;
+  --rose: #b0566b;
+  --border: #e5dfd2;
+  --aside-bg: #f1efe4;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c211b;
+    --card: #262c24;
+    --ink: #e4e6dd;
+    --ink-soft: #a3ac9a;
+    --accent: #8fbc9c;
+    --accent-dark: #a9d0b5;
+    --rose: #d68a9c;
+    --border: #3a4237;
+    --aside-bg: #2b332a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+a { color: var(--accent-dark); }
+a:hover { color: var(--rose); }
+
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.wrap-wide { max-width: 62rem; }
+
+/* Header */
+.site-header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.site-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.site-title a { color: var(--ink); text-decoration: none; }
+.site-tagline {
+  margin: 0.4rem 0 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 0.98rem;
+}
+.site-nav { margin-top: 0.8rem; font-size: 0.95rem; }
+.site-nav a { margin: 0 0.6rem; text-decoration: none; }
+
+/* Hero */
+.hero { margin: 0 0 2rem; }
+.hero img {
+  width: 100%;
+  max-height: 26rem;
+  object-fit: cover;
+  display: block;
+  border-radius: 0 0 12px 12px;
+}
+.hero figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  padding-top: 0.4rem;
+}
+
+/* Post cards */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0 3rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.card a.cover { display: block; }
+.card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.card-body { padding: 1rem 1.15rem 1.25rem; }
+.card-date {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.card h2 { margin: 0.3rem 0 0.5rem; font-size: 1.25rem; line-height: 1.3; }
+.card h2 a { text-decoration: none; color: var(--ink); }
+.card h2 a:hover { color: var(--accent-dark); }
+.card p { margin: 0; font-size: 0.95rem; color: var(--ink-soft); }
+
+/* Post pages */
+.post { padding: 2.2rem 0 3rem; }
+.post-date {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.post h1 { margin: 0.3rem 0 1rem; font-size: 2rem; line-height: 1.25; }
+.post figure { margin: 2rem 0; }
+.post figure img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+.post figcaption {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding-top: 0.45rem;
+  font-style: italic;
+}
+.backlink { font-size: 0.92rem; text-decoration: none; }
+
+/* Affiliate aside */
+.garden-shed {
+  margin: 2.5rem 0 0;
+  padding: 1.1rem 1.3rem 1.2rem;
+  background: var(--aside-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+.garden-shed h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+}
+.garden-shed ul { margin: 0 0 0.6rem; padding-left: 1.2rem; }
+.garden-shed li { margin: 0.3rem 0; }
+.garden-shed .fineprint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.6rem 1rem 2.2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.site-footer p { margin: 0.3rem 0; }
