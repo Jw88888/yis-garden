@@ -1,4 +1,4 @@
-# My Flower Journey
+# Yi's Garden
 
 A static garden blog — plain HTML/CSS, no build step. Everything that deploys
 lives in `public/`; the original iPhone photos (HEIC/MOV) stay out of git.
