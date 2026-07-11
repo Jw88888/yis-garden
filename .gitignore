@@ -7,3 +7,4 @@
 iCloud Photos*/
 .claude/
 node_modules/
+dist/
