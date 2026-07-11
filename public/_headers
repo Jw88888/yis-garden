@@ -1,0 +1,4 @@
+/style.css
+  Cache-Control: public, max-age=0, must-revalidate
+/js/affiliate.js
+  Cache-Control: public, max-age=0, must-revalidate
