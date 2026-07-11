@@ -128,6 +128,7 @@ a:hover { color: var(--accent-warm); }
 }
 .card img {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
