@@ -244,6 +244,7 @@ a:hover { color: var(--accent-warm); }
 }
 .post figure img {
   width: 100%;
+  height: auto;
   display: block;
   border-radius: 2px;
 }
