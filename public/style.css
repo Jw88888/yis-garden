@@ -274,6 +274,7 @@ a:hover { color: var(--accent-warm); }
   border-top: 2px solid var(--accent);
   font-size: 0.97rem;
 }
+.garden-shed:empty { display: none; }
 .garden-shed h3 {
   margin: 0 0 0.8rem;
   font-family: var(--sans);
