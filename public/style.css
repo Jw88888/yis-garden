@@ -173,7 +173,7 @@ a:hover { color: var(--accent-warm); }
   align-items: center;
   margin-bottom: 0.8rem;
 }
-.card--featured img { aspect-ratio: 3 / 2; }
+.card--featured img { aspect-ratio: 4 / 3; }
 .card--featured .card-body { padding: 0; }
 .card--featured h2 {
   font-size: clamp(1.8rem, 3.4vw, 2.5rem);
