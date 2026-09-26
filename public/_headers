@@ -7,3 +7,9 @@
 # Keep the *.pages.dev mirror out of search results; yisgarden.com is canonical.
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()

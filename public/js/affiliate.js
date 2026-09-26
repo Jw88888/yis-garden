@@ -3,11 +3,8 @@
    ------------------------------------------------------------
    EDIT THE SECTION BELOW to change the "From my garden shed"
    product boxes. Everything is in this one file — you don't
-   need to touch any HTML.
-
-   After you change anything here, bump the version number on the
-   <script src="js/affiliate.js?v=N"> line in the HTML files (or
-   just ask Claude to) so visitors' browsers load the new version.
+   need to touch any HTML. The build (build.js) takes care of
+   browser caching, so changes show up as soon as it deploys.
    ============================================================ */
 
 /* Your Amazon Associates tracking ID, e.g. "yisgarden-20".

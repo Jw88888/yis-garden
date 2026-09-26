@@ -310,3 +310,30 @@ a:hover { color: var(--accent-warm); }
   margin-bottom: 1rem;
 }
 .site-footer p { margin: 0.3rem 0; }
+
+/* ---------- Earlier / later post links (added by build.js) ---------- */
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3.4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--hairline);
+}
+.post-nav a {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+.post-nav .next { grid-column: 2; text-align: right; }
+.post-nav span {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}

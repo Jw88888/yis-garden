@@ -76,5 +76,75 @@ function walk(dir) {
 }
 walk(OUT);
 
+// 4. Collect post metadata straight from each post's <head>, newest first.
+const SITE = "https://yisgarden.com";
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const meta = (html, re) => (html.match(re) || [])[1];
+
+const postsDir = path.join(OUT, "posts");
+const posts = fs.readdirSync(postsDir)
+  .filter((f) => f.endsWith(".html"))
+  .map((f) => {
+    const html = fs.readFileSync(path.join(postsDir, f), "utf8");
+    const slug = f.slice(0, -5);
+    const published = meta(html, /property="article:published_time" content="([^"]+)"/);
+    if (!published) throw new Error(`posts/${f} is missing article:published_time`);
+    return {
+      file: path.join(postsDir, f),
+      slug,
+      url: `${SITE}/posts/${slug}`,
+      title: meta(html, /property="og:title" content="([^"]+)"/),
+      description: meta(html, /name="description" content="([^"]+)"/),
+      image: meta(html, /property="og:image" content="([^"]+)"/),
+      published,
+      modified: meta(html, /"dateModified": "([^"]+)"/) || published,
+    };
+  })
+  .sort((a, b) => b.published.localeCompare(a.published));
+
+// 5. Previous/next links at the foot of every post.
+posts.forEach((p, i) => {
+  const newer = posts[i - 1], older = posts[i + 1];
+  const link = (q, cls, label) =>
+    q ? `<a class="${cls}" href="/posts/${q.slug}"><span>${label}</span>${q.title}</a>` : "";
+  const nav = `<nav class="post-nav" aria-label="More posts">${link(older, "prev", "← Earlier")}${link(newer, "next", "Later →")}</nav>\n  `;
+  const html = fs.readFileSync(p.file, "utf8");
+  fs.writeFileSync(p.file, html.replace(/<\/article>/, `${nav}</article>`));
+});
+
+// 6. sitemap.xml, generated so a new post can never be left out.
+const latest = posts.reduce((m, p) => (p.modified > m ? p.modified : m), "");
+const urls = [
+  `  <url><loc>${SITE}/</loc><lastmod>${latest}</lastmod></url>`,
+  ...posts.map((p) => `  <url><loc>${p.url}</loc><lastmod>${p.modified}</lastmod></url>`),
+  `  <url><loc>${SITE}/about</loc></url>`,
+];
+fs.writeFileSync(path.join(OUT, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`);
+
+// 7. RSS feed for feed readers.
+const rfc822 = (d) => new Date(`${d}T12:00:00Z`).toUTCString();
+const items = posts.map((p) => `    <item>
+      <title>${esc(p.title)}</title>
+      <link>${p.url}</link>
+      <guid>${p.url}</guid>
+      <pubDate>${rfc822(p.published)}</pubDate>
+      <description>${esc(`<p><img src="${p.image}" alt=""></p><p>${p.description}</p>`)}</description>
+    </item>`);
+fs.writeFileSync(path.join(OUT, "feed.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yi's Garden</title>
+    <link>${SITE}/</link>
+    <atom:link href="${SITE}/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>A journal of one backyard's flowers through the seasons.</description>
+    <language>en-us</language>
+    <lastBuildDate>${rfc822(posts[0].published)}</lastBuildDate>
+${items.join("\n")}
+  </channel>
+</rss>
+`);
+
 console.log("Built dist/ with content-hashed assets:");
 for (const [k, v] of Object.entries(renamed)) console.log(`  ${k}  ->  ${v}`);
+console.log(`Generated sitemap.xml and feed.xml (${posts.length} posts), post prev/next links.`);

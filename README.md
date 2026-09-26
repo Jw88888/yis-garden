@@ -1,7 +1,8 @@
 # Yi's Garden
 
-A static garden blog — plain HTML/CSS, no build step. Everything that deploys
-lives in `public/`; the original iPhone photos (HEIC/MOV) stay out of git.
+A static garden blog — plain HTML/CSS. You edit files in `public/`; a tiny
+zero-dependency build (`node build.js`) copies them to `dist/` and generates
+the rest; the original iPhone photos (HEIC/MOV) stay out of git.
 
 ## Structure
 
@@ -22,8 +23,8 @@ lives in `public/`; the original iPhone photos (HEIC/MOV) stay out of git.
    Connect to Git**, pick this repo.
 3. Build settings:
    - **Framework preset:** None
-   - **Build command:** *(leave empty)*
-   - **Build output directory:** `public`
+   - **Build command:** `node build.js`
+   - **Build output directory:** `dist`
 4. Deploy. Every `git push` redeploys automatically.
 
 ## Adding a post
@@ -31,8 +32,17 @@ lives in `public/`; the original iPhone photos (HEIC/MOV) stay out of git.
 1. Convert/resize the photo:
    `sips -s format jpeg -s formatOptions 82 --resampleHeightWidthMax 1600 IMG_XXXX.HEIC --out public/images/descriptive-name.jpg`
 2. Copy an existing file in `public/posts/` as a template and edit.
+   Keep the `article:published_time` meta tag accurate — the build reads it.
 3. Add a card for it at the top of the grid in `public/index.html`
    (make a thumb: `sips -s format jpeg -s formatOptions 75 --resampleHeightWidthMax 800 public/images/descriptive-name.jpg --out public/images/thumb-descriptive-name.jpg`).
+
+## What the build generates
+
+`build.js` handles these automatically on every deploy — don't edit them by hand:
+
+- content-hashed `style.css` / `affiliate.js` filenames (cache-busting)
+- `sitemap.xml` and the RSS feed `feed.xml`, built from each post's meta tags
+- the "← Earlier / Later →" links at the bottom of each post
 
 ## Editing the affiliate product boxes
 
@@ -48,8 +58,7 @@ slug (the filename without `.html`). Each item is `{ text, url, note }`:
 ```
 
 Change the text or link, add or remove items — the box on that post rebuilds
-itself. **After editing, bump the version** in the `<script src=".../affiliate.js?v=N">`
-tags (browsers cache the file otherwise). Notes:
+itself (the build takes care of browser caching). Notes:
 
 - Links point at Amazon search results so they never go stale; swap in a
   specific product URL any time.
